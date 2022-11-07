@@ -44,6 +44,9 @@ class Physics
   
   //Relativity mass
   double Relativity(double mr, double modv, double m);
+  
+  //Galactic field
+  double GalacticField(double BG[3], double r[3]);
 };
 
 

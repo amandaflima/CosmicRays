@@ -106,6 +106,28 @@ void Mathematics::CoordinateTransform(double vec1[3], double vec2[3]){
 	printf("phi=%.9e ",vec1[2]);
 
 
-}       
+}     
+
+//Cartesian coordinate transformation for cylindrical
+void Mathematics::CylindricalTransform(double vec1[3], double vec2[3]){   
+	//vec1[3] = cylindrical coordinates: rô, phi, z 
+	//vec2[3] = cartesian coordinates: rx, ry, rz
+
+	vec1[0] = sqrt(vec2[0]*vec2[0]+vec2[1]*vec2[1]); //rô
+	if (vec2[0]==0){
+		if (vec2[1]>=0){
+			vec1[1]=pi/2; //phi
+		}
+		else if (vec2[1]<0){
+			vec1[1]=-pi/2;  //phi
+		}	
+	}
+	else{
+		vec1[1] = atan(vec2[1]/vec2[0]); //phi
+	}
+	vec1[2] = vec2[2]; //z
+		
+
+}      
  
   

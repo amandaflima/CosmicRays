@@ -6,20 +6,17 @@
 
 #include "Mathematics.h"
 #include "Physics.h"
-//#include "Atmosphere.h"
+
 
 //Global variables
 
-//char ch;
-//char string[8],line[100];
-//double altitude[1481],temperature[1481],pressure[1481],density[1481];
-
-const double q=1.602*pow(10.0,-19);
-const double m=1.673*pow(10.0,-27);
-const double UA=1.495978707*pow(10.0,11);
-const int c=299792458;
 
 
+const double q=1.602*pow(10.0,-19); // particle charge
+const double m=1.673*pow(10.0,-27); //particle mass
+const double UA=1.495978707*pow(10.0,11); //Astronomical unit
+const double kpc=3.085677582*pow(10,19); //Kiloparsec
+const int c=299792458; //Speed of light
 
 int i,j,k,l;
 double t,w,T;

@@ -11,7 +11,7 @@ int main (int par_exec1, char* pars_exec[])
 	outfile = fopen("Positions.dat","w"); //Positions for the trajectory graph
 	
 	FILE * outfile2;
-	outfile2 = fopen("RaioPeriodo_relat5.dat","w"); //Radius and period data
+	outfile2 = fopen("RaioPeriodo_relat5.dat","w"); //Radius and period data for the graphics
 
     printf("*******PROPAGATION OF COSMIC RAYS*******\n\n");   
 
@@ -20,7 +20,7 @@ int main (int par_exec1, char* pars_exec[])
     B0[0]=0,B0[1]=2e-6,B0[2]=0;          //Initial magnetic field
    
     modv=Math->Mod(v0);	//Velocity module
-   	modB=Math->Mod(B0); //Magnetic field module
+   	modB=Math->Mod(B0); //Constant Magnetic field module (If your simulation is another field type, change the called function)
    	
    	rL0=Phys->Larmor(rL,m,q,modv,modB); //Initial Larmor radius
    	
@@ -53,14 +53,17 @@ int main (int par_exec1, char* pars_exec[])
 		if(i<=maxprt)	 printf(" r0=%.3e ",modr);
 
 		/* TYPE OF MAGNETIC FIELD
-		---Constant 
+		//---Constant 
 		modB=Math->Mod(B0);
 		
-		---Variable magnetic field
+		//---Variable magnetic field
 		modB=Phys->VarB(B,B0,r0,rL0);
 		
-		---Dipole magnetic field
+		//---Dipole magnetic field
 		modB=Phys->Dipole(B,r0);
+		
+		//---Galactic magnetic Field
+		modB=Phys->GalacticField(B,r0);
 		*/
 
 		modB=Phys->VarB(B,B0,r0,rL0); //Type of magnetic field 

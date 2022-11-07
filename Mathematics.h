@@ -40,6 +40,9 @@ class Mathematics
   
   //Cartesian coordinate transformation for spherical
   void CoordinateTransform(double vec1[3], double vec2[3]);
+  
+  //Cartesian coordinate transformation for Cylindrical
+  void CylindricalTransform(double vec1[3], double vec2[3]);
  
 };
 

@@ -135,7 +135,7 @@ double Physics::Dipole(double BD[3], double r[3]){
 	Math->CoordinateTransform(spherical, r);
 	
 	BS[0] = (r1*mi0*mi*cos(spherical[1]))/(2*pi*E[0]*E[0]*E[0]); //Br
-	BS[1] = (r1*mi0*mi*cos(spherical[1]))/(4*pi*E[0]*E[0]*E[0]); //Btheta
+	BS[1] = (r1*mi0*mi*sin(spherical[1]))/(4*pi*E[0]*E[0]*E[0]); //Btheta
 	BS[2] = 0; //Bphi
 	
 	BD[0] = (BS[1]*cos(spherical[1]) + BS[0]*sin(spherical[1]))*cos(spherical[1]);
@@ -145,7 +145,7 @@ double Physics::Dipole(double BD[3], double r[3]){
 }
 
 
-
+//Relativity
 double Physics::Relativity(double mr, double modv, double m){
 	
 	double c, gama;
@@ -156,6 +156,57 @@ double Physics::Relativity(double mr, double modv, double m){
 	mr = gama * m; //relativistic mass
 	
 	return mr;
+}
+
+//Galactic field
+double Physics::GalacticField(double BG[3], double r[3]){
+	//BG[3] - galactic field cartesian coordinates
+	//BC[3] - galactic field cylindrical coordinates
+	//cylindrical[0] =  rô  
+	//cylindrical[1]=   phi   
+	//cylindrical[2]=   z
+	double cylindrical[3], Bsp, p=-10/rad2deg, beta=-5.67, B0p, BC[3],z;
+	double e,r0,p1, z1,z2,modB,modR;
+	e= 3.25539e20;
+	r0=2.623e20;
+	p1=6.171e19;
+	z1=9.257e18;
+	z2=1.234e20;
+	
+	Mathematics * Math = new Mathematics();
+	modR=Math->Mod(r);	
+	Math->CylindricalTransform(cylindrical, r);
+	
+	
+	//ASS MODEL
+	if (modR<1e-3*kpc){ //correction for small initial position values, for example at the origin
+		B0p = 3.19e-6 * pow(10,-10);
+		Bsp = B0p*0.41;
+	}
+	else{
+		B0p = (3*r0/cylindrical[0]) * pow(tanh(cylindrical[0]/p1),3) * pow(10,-10);	
+		Bsp = B0p*cos(cylindrical[1] - beta*log(cylindrical[0]/e))*cos(cylindrical[1] - beta*log(cylindrical[0]/e)); //ASS
+	}
+	
+	/* BSS MODEL
+	B0p = (3*r0/cylindrical[0]) * pow(tanh(cylindrical[0]/p1),3) * pow(10,-10);	
+	Bsp = B0p*cos(cylindrical[1] - beta*log(cylindrical[0]/e))*cos(cylindrical[1] - beta*log(cylindrical[0]/e));
+	Bsp = B0p*cos(cylindrical[0] - beta*log(cylindrical[1]/e)); 
+	*/
+	
+	//galactic field cylindrical coordinates
+	z=r[2];
+	BC[0] = Bsp*sin(p) *((1/(2*cosh(z/z1)))+  (1/(2*cosh(z/z2))));                               //brô
+	BC[1] = Bsp*cos(p) * ((1/(2*cosh(z/z1)))+  (1/(2*cosh(z/z2))));                             //bphi 
+	BC[2] =  0;                //bz
+
+ 	//galactic field cartesian coordinates
+	BG[0] = BC[0]*cos(BC[1]);     //BX              
+	BG[1] = BC[0]*sin(BC[1]) ;   //BY
+	BG[2] = 0;       //BZ
+
+	modB=Math->Mod(BG);		
+	return modB;
 }
 
 
