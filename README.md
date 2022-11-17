@@ -3,7 +3,7 @@ Scientific initiation research presented at the Federal University of ABC (UFABC
 More information about the event at: https://encontroic.eventos.ufabc.edu.br/
 
 
-The final report is in the file Scientific_Initiation_Research.pdf
+The final report is in the file Scientific_Initiation_Research.pdf and the poster presentation is on YouTube: https://www.youtube.com/watch?v=CCQSZpCZoPQ
 
 
 This code simulates the propagation of the trajectory of cosmic rays in the magnetic field in different configurations of magnetic fields: uniform, variable and dipole, in the non-relativistic and relativistic cases.
